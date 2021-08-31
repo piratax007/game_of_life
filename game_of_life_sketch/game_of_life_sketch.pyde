@@ -1,5 +1,5 @@
-width_ = 700
-height_ = 500
+width_ = 960
+height_ = 540
 resolution = 10
 old_generation = [[0 for col in range(width_ / resolution)] for row in range(height_ / resolution)]
 frame_rate = 60
@@ -19,7 +19,7 @@ def draw_cells(generation):
     for row in range(height_ / resolution):
         for col in range(width_ / resolution):
             if old_generation[row][col] == 1:
-                fill(255)
+                fill(200)
                 stroke(70)
                 rect(col *  resolution, row * resolution, resolution, resolution)
 
@@ -85,17 +85,28 @@ def mousePressed():
     draw_cells(old_generation)
 
 
+def instructions():
+    fill(200)
+    text("INSTRUCTIONS", 25, height_ + 25)
+    text("Press r follow by Enter", 25, height_ + 50)
+    text("Mouse click on a cell to come into being", 25, height_ + 75)
+    text("r to create a random seed", width_ / 2, height_ + 25)
+    text("ENTER to start / pause the simulation", width_ / 2, height_ + 50)
+    text("UP or DOWN to increase or decrease the speed of simulation", width_ / 2, height_ + 75)
+
+
 def setup():
     frameRate(frame_rate)
-    size(width_, height_)
+    size(width_, height_ + 100)
     background(75)
     draw_grid()
+    instructions()
     
     
 def draw():
     global old_generation
     
-    frameRate(frame_rate)    
+    frameRate(frame_rate)
     
     if random_seed is True:
         old_generation = [[int(random(2)) for col in range(width_ / resolution)] for row in range(height_ / resolution)]
@@ -103,6 +114,7 @@ def draw():
     if run_simulation is True:
         background(75)
         draw_grid()
+        instructions()
         draw_cells(old_generation)
         old_generation = new_generation(old_generation)
     
