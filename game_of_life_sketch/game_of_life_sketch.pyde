@@ -22,6 +22,11 @@ def draw_cells(generation):
                 fill(200)
                 stroke(70)
                 rect(col *  resolution, row * resolution, resolution, resolution)
+            else:
+                fill(75)
+                stroke(70)
+                rect(col *  resolution, row * resolution, resolution, resolution)
+                
 
 
 def count_neighbours_alive(grid, x, y):
@@ -81,7 +86,11 @@ def mousePressed():
     
     click_x = floor(mouseX / resolution)
     click_y = floor(mouseY / resolution)
-    old_generation[click_y][click_x] = 1
+    if old_generation[click_y][click_x] == 0:
+        old_generation[click_y][click_x] = 1
+    else:
+        old_generation[click_y][click_x] = 0
+        
     draw_cells(old_generation)
 
 
