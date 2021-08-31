@@ -1,8 +1,7 @@
-from random import randrange
-
 width_ = 700
 height_ = 500
 resolution = 10
+old_generation = [[0 for col in range(width_ / resolution)] for row in range(height_ / resolution)]
 frame_rate = 60
 run_simulation = False
 random_seed = False
@@ -77,9 +76,19 @@ def keyPressed():
             frame_rate -= 5
 
 
+def mousePressed():
+    global old_generation
+    
+    click_x = floor(mouseX / resolution)
+    click_y = floor(mouseY / resolution)
+    old_generation[click_y][click_x] = 1
+    draw_cells(old_generation)
+
+
 def setup():
     frameRate(frame_rate)
     size(width_, height_)
+    background(75)
     
     
 def draw():
@@ -90,7 +99,7 @@ def draw():
     draw_grid()
     
     if random_seed is True:
-        old_generation = [[randrange(2) for col in range(width_ / resolution)] for row in range(height_ / resolution)]
+        old_generation = [[int(random(2)) for col in range(width_ / resolution)] for row in range(height_ / resolution)]
         
     if run_simulation is True:
         draw_cells(old_generation)
