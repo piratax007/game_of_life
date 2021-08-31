@@ -89,19 +89,20 @@ def setup():
     frameRate(frame_rate)
     size(width_, height_)
     background(75)
+    draw_grid()
     
     
 def draw():
     global old_generation
     
     frameRate(frame_rate)    
-    background(75)
-    draw_grid()
     
     if random_seed is True:
         old_generation = [[int(random(2)) for col in range(width_ / resolution)] for row in range(height_ / resolution)]
         
     if run_simulation is True:
+        background(75)
+        draw_grid()
         draw_cells(old_generation)
         old_generation = new_generation(old_generation)
     
