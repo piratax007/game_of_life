@@ -1,3 +1,15 @@
+'''
+Game of life
+
+This sketch implement the game of life by John Conway with a random seed and setting option
+from mouse interaction
+
+Fausto M. Lagos S. - 2021
+piratax007@protonmail.ch - @piratax007
+GNU GPL V3.0+
+'''
+
+
 width_ = 960
 height_ = 540
 resolution = 10
@@ -15,17 +27,16 @@ def draw_grid():
             rect(j *  resolution, i * resolution, resolution, resolution)
             
             
-def draw_cells(generation):
+def draw_cells():
     for row in range(height_ / resolution):
         for col in range(width_ / resolution):
             if old_generation[row][col] == 1:
                 fill(200)
-                stroke(70)
-                rect(col *  resolution, row * resolution, resolution, resolution)
             else:
                 fill(75)
-                stroke(70)
-                rect(col *  resolution, row * resolution, resolution, resolution)
+                
+            stroke(70)
+            rect(col *  resolution, row * resolution, resolution, resolution)
                 
 
 
@@ -49,6 +60,7 @@ def new_generation(previous_generation):
             state = previous_generation[i][j]
             neighbours_alive = count_neighbours_alive(previous_generation, i, j)
                 
+            # rules
             if state == 0 and neighbours_alive == 3:
                 new_gen[i][j] = 1
             elif state == 1 and (neighbours_alive < 2 or neighbours_alive > 3):
@@ -91,17 +103,17 @@ def mousePressed():
     else:
         old_generation[click_y][click_x] = 0
         
-    draw_cells(old_generation)
+    draw_cells()
 
 
 def instructions():
     fill(200)
-    text("INSTRUCTIONS", 25, height_ + 25)
-    text("Press r follow by Enter", 25, height_ + 50)
-    text("Mouse click on a cell to come into being", 25, height_ + 75)
-    text("r to create a random seed", width_ / 2, height_ + 25)
-    text("ENTER to start / pause the simulation", width_ / 2, height_ + 50)
-    text("UP or DOWN to increase or decrease the speed of simulation", width_ / 2, height_ + 75)
+    text("Press r (random seed) follow by Enter", 25, height_ + 25)
+    text("Mouse click on a cell to change their state", 25, height_ + 50)
+    text("ENTER to start / pause the simulation", width_ / 2, height_ + 25)
+    text("UP or DOWN to increase or decrease the speed of simulation", width_ / 2, height_ + 50)
+    fill(90)
+    text("by @piratax007", width_ - 110, height_ + 75)
 
 
 def setup():
@@ -124,6 +136,6 @@ def draw():
         background(75)
         draw_grid()
         instructions()
-        draw_cells(old_generation)
+        draw_cells()
         old_generation = new_generation(old_generation)
     
