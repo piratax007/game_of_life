@@ -17,5 +17,16 @@ If you need to compile this such an application from any operating system
 (GNU Linux, Mac OS or Windows), go to the File menu and search for the 
 Export Application option.
 
+
+## Modes Torus and Plane
+
+The simulation can be run over a torus (whitout edges) i.e. in a ciclic mode using the
+function 'count_neighbours_alive_torus(grid, r, c)' or over a plane (with edges) using
+the funcition 'count_neighbours_alive_plane(grid, r, c)'.
+
+In the first one (_torus_) the neighbours alive search look for the state of the last
+cell or the first one if the current cell is on the edge. In the last one mode (_plane_)
+the search does not take into account any other cell beyond the edge.
+
 [1]: https://en.wikipedia.org/wiki/Conway's_Game_of_Life
 [2]: https://processing.org/download
