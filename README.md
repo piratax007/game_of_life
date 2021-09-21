@@ -21,8 +21,8 @@ Export Application option.
 ## Modes Torus and Plane
 
 The simulation can be run over a torus (whitout edges) i.e. in a ciclic mode using the
-function 'count_neighbours_alive_torus(grid, r, c)' or over a plane (with edges) using
-the funcition 'count_neighbours_alive_plane(grid, r, c)'.
+function `count_neighbours_alive_torus(grid, r, c)` or over a plane (with edges) using
+the funcition `count_neighbours_alive_plane(grid, r, c)`.
 
 In the first one (_torus_) the neighbours alive search look for the state of the last
 cell or the first one if the current cell is on the edge. In the last one mode (_plane_)
