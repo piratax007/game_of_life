@@ -20,14 +20,17 @@ random_seed = False
 
 
 def draw_grid():
-    for i in range(height_ / resolution):
-        for j in range(width_ / resolution):
-            noFill()
-            stroke(70)
-            rect(j *  resolution, i * resolution, resolution, resolution)
+    noFill()
+    stroke(70)
+    
+    for i in range(0, height_, resolution):
+         for j in range(0, width_, resolution):
+            rect(j, i, resolution, resolution)
             
             
 def draw_cells():
+    stroke(70)
+    
     for row in range(height_ / resolution):
         for col in range(width_ / resolution):
             if old_generation[row][col] == 1:
@@ -35,21 +38,50 @@ def draw_cells():
             else:
                 fill(75)
                 
-            stroke(70)
             rect(col *  resolution, row * resolution, resolution, resolution)
                 
 
 
-def count_neighbours_alive(grid, x, y):
+def count_neighbours_alive_torus(grid, r, c):
     sum = 0
     for i in range(-1, 2):
+        row = (r + i  + (height_ / resolution)) % (height_ / resolution)
         for j in range(-1, 2):
-            col = (y + j + (width_ / resolution)) % (width_ / resolution)
-            row = (x + i  + (height_ / resolution)) % (height_ / resolution)
+            col = (c + j + (width_ / resolution)) % (width_ / resolution)
             sum += grid[row][col]
             
-    sum -= grid[x][y]
+    sum -= grid[r][c]
     return sum
+
+
+def count_neighbours_alive_plane(grid, r, c):
+    sum = 0
+    
+    if r == 0:
+        range_r = range(2)
+    elif r == (height_ / resolution) - 1:
+        range_r = range(-1, 1)
+    else:
+        range_r = range(-1, 2)
+        
+    if c == 0:
+        range_c = range(2)
+    elif c == (width_ / resolution) - 1:
+        range_c = range(-1, 1)
+    else:
+        range_c = range(-1, 2)
+    
+    for i in range_r:
+        row = r + i
+        
+        for j in range_c:
+            col = c + j
+            
+            sum += grid[row][col]
+            
+    sum -= grid[r][c]
+    return sum
+                
 
 
 def new_generation(previous_generation):
@@ -58,7 +90,7 @@ def new_generation(previous_generation):
     for i in range(height_ / resolution):
         for j in range(width_ / resolution):
             state = previous_generation[i][j]
-            neighbours_alive = count_neighbours_alive(previous_generation, i, j)
+            neighbours_alive = count_neighbours_alive_torus(previous_generation, i, j)
                 
             # rules
             if state == 0 and neighbours_alive == 3:
